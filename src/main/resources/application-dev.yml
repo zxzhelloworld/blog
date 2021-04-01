@@ -1,0 +1,22 @@
+server:
+  port: 9999
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://121.5.50.164:3306/blog?useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: blog
+    password: zxzblog
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+logging:
+  level:
+    root: info
+    com.lrm: info
+  file: log/blog-dev.log
+
+
+
