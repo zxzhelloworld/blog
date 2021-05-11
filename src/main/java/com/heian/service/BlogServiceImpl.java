@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by 北极熊
@@ -81,7 +82,16 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Page<Blog> listBlog(Pageable pageable) {
-        return blogRepository.findAll(pageable);
+        //查询条件组装
+        Specification<Blog> spec = new Specification<Blog>() {
+            @Override
+            public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<String> published = root.get("published");
+                Predicate p1 = cb.equal(published, 1);
+                return cb.and(p1);
+            }
+        };
+        return blogRepository.findAll(spec,pageable);
     }
 
     @Override
